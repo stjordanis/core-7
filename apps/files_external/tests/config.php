@@ -45,8 +45,8 @@ return [
 		'wait'=> 0
 	],
 	'owncloud'=> [
-		'run'=>false,
-		'host'=>'localhost/owncloud',
+		'run'=>true,
+		'host'=>'localhost:8080',
 		'user'=>'test',
 		'password'=>'test',
 		'root'=>'',

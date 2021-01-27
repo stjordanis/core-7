@@ -344,6 +344,7 @@ abstract class Storage extends \Test\TestCase {
 		$watcher->setPolicy(Watcher::CHECK_ALWAYS);
 		$this->instance->file_put_contents('/lorem.txt', \file_get_contents($textFile));
 		$this->assertTrue($watcher->checkUpdate('/lorem.txt'), 'Update detected');
+		sleep(1);
 		$this->assertFalse($watcher->checkUpdate('/lorem.txt'), 'No update');
 	}
 

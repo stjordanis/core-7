@@ -19,289 +19,10 @@ config = {
 	'javascript': True,
 
 	'litmus': True,
-
-	'dav': True,
-
-	'phpunit': {
-		'allDatabases' : {
-			'phpVersions': [
-				'7.2',
-			]
-		},
-		'reducedDatabases' : {
-			'phpVersions': [
-				'7.3',
-				'7.4',
-			],
-			'databases': [
-				'sqlite',
-				'mariadb:10.2',
-			]
-		},
-		'external-samba-windows' : {
-			'phpVersions': [
-				'7.2',
-				'7.4',
-			],
-			'databases': [
-				'sqlite',
-			],
-			'externalTypes': [
-				'samba',
-				'windows',
-			],
-			'coverage': True,
-			'extraCommandsBeforeTestRun': [
-				'ls -l /var/cache',
-				'mkdir /var/cache/samba',
-				'ls -l /var/cache',
-				'ls -l /var/cache/samba',
-			]
-		},
-		'external-other' : {
-			'phpVersions': [
-				'7.2',
-				'7.4',
-			],
-			'databases': [
-				'sqlite',
-			],
-			'externalTypes': [
-				'webdav',
-				'sftp',
-				'scality'
-			],
-			'coverage': True
-		},
-	},
-
-	'acceptance': {
-		'api': {
-			'suites': [
-				'apiAuth',
-				'apiAuthOcs',
-				'apiAuthWebDav',
-				'apiCapabilities',
-				'apiComments',
-				'apiFavorites',
-				'apiMain',
-				'apiProvisioning-v1',
-				'apiProvisioning-v2',
-				'apiProvisioningGroups-v1',
-				'apiProvisioningGroups-v2',
-				'apiShareCreateSpecialToRoot1',
-				'apiShareCreateSpecialToShares1',
-				'apiShareCreateSpecialToRoot2',
-				'apiShareCreateSpecialToShares2',
-				'apiSharees',
-				'apiShareManagementToRoot',
-				'apiShareManagementToShares',
-				'apiShareManagementBasicToRoot',
-				'apiShareManagementBasicToShares',
-				'apiShareOperationsToRoot',
-				'apiShareOperationsToShares',
-				'apiSharePublicLink1',
-				'apiSharePublicLink2',
-				'apiShareReshareToRoot1',
-				'apiShareReshareToShares1',
-				'apiShareReshareToRoot2',
-				'apiShareReshareToShares2',
-				'apiShareReshareToRoot3',
-				'apiShareReshareToShares3',
-				'apiShareUpdateToRoot',
-				'apiShareUpdateToShares',
-				'apiTags',
-				'apiTranslation',
-				'apiTrashbin',
-				'apiVersions',
-				'apiWebdavEtagPropagation1',
-				'apiWebdavEtagPropagation2',
-				'apiWebdavLocks',
-				'apiWebdavLocks2',
-				'apiWebdavLocks3',
-				'apiWebdavLocksUnlock',
-				'apiWebdavMove1',
-				'apiWebdavMove2',
-				'apiWebdavOperations',
-				'apiWebdavPreviews',
-				'apiWebdavProperties1',
-				'apiWebdavProperties2',
-				'apiWebdavUpload1',
-				'apiWebdavUpload2',
-			],
-		},
-		'apiNotifications': {
-			'suites': [
-				'apiSharingNotificationsToRoot',
-				'apiSharingNotificationsToShares',
-			],
-			'extraApps': {
-				'notifications': 'composer install'
-			},
-		},
-		'apiFederation': {
-			'suites': [
-				'apiFederationToRoot1',
-				'apiFederationToRoot2',
-				'apiFederationToShares1',
-				'apiFederationToShares2',
-			],
-			'federatedServerNeeded': True,
-			'federatedServerVersions': ['git', 'latest', '10.5.0']
-		},
-		'cli': {
-			'suites': [
-				'cliBackground',
-				'cliLocalStorage',
-				'cliMain',
-				'cliProvisioning',
-				'cliTrashbin',
-			],
-			'emailNeeded': True,
-		},
-		'cliAppManagement': {
-			'suites': [
-				'cliAppManagement',
-			],
-			'testingRemoteSystem': False
-		},
-		'cliExternalStorage': {
-			'suites': [
-				'cliExternalStorage',
-			],
-			'federatedServerNeeded': True,
-			'federatedServerVersions': ['git', 'latest', '10.5.0']
-		},
-		'webUI': {
-			'suites': {
-				'webUIAddUsers': '',
-				'webUIAdminSettings': '',
-				'webUIComments': '',
-				'webUICreateDelete': '',
-				'webUIFavorites': '',
-				'webUIFiles': '',
-				'webUILogin': '',
-				'webUIManageQuota': '',
-				'webUIManageUsersGroups': 'webUIManageUsersGrps',
-				'webUIMoveFilesFolders': 'webUIMoveFilesFolder',
-				'webUIPersonalSettings': 'webUIPersonalSetting',
-				'webUIRenameFiles': '',
-				'webUIRenameFolders': '',
-				'webUIRestrictSharing': '',
-				'webUISettingsMenu': '',
-				'webUISharingAcceptShares': 'webUISharingAcceptSh',
-				'webUISharingAutocompletion1': 'webUISharingAutocomp1',
-				'webUISharingAutocompletion2': 'webUISharingAutocomp2',
-				'webUISharingInternalGroups1': 'webUISharingIntGroup1',
-				'webUISharingInternalGroups2': 'webUISharingIntGroup2',
-				'webUISharingInternalUsers1': 'webUISharingIntUsers1',
-				'webUISharingInternalUsers2': 'webUISharingIntUsers2',
-				'webUISharingPublic1': '',
-				'webUISharingPublic2': '',
-				'webUITags': '',
-				'webUITrashbin': '',
-				'webUIUpload': '',
-				'webUIWebdavLockProtection': 'webUIWebdavLockProt',
-				'webUIWebdavLocks': '',
-			},
-			'emailNeeded': True,
-			'useHttps': False,
-		},
-		'webUINotifications': {
-			'suites': {
-				'webUISharingNotifications': 'webUISharingNotify',
-			},
-			'emailNeeded': True,
-			'useHttps': False,
-			'extraApps': {
-				'notifications': 'composer install'
-			},
-		},
-		'webUIFileActionsMenu': {
-			'suites': {
-				'webUIFileActionsMenu': '',
-			},
-			'useHttps': False,
-			'extraApps': {
-				'files_texteditor': 'make vendor',
-				'richdocuments': 'make vendor',
-			},
-		},
-		'webUIFederation': {
-			'suites': {
-				'webUISharingExternal1': 'webUISharingExt1',
-				'webUISharingExternal2': 'webUISharingExt2',
-			},
-			'federatedServerNeeded': True,
-			'federatedServerVersions': ['git', 'latest', '10.5.0']
-		},
-		'webUIFirefox': {
-			'suites': {
-				'webUIFirefoxSmoketest': 'webUIFfSmoke',
-			},
-			'browsers': [
-				'firefox'
-			],
-			'emailNeeded': True,
-			'useHttps': False,
-			'filterTags': '@smokeTest&&~@notifications-app-required',
-			'runAllSuites': True,
-			'numberOfParts': 3,
-		},
-		'webUIProxy': {
-			'suites': {
-				'webUIProxySmoketest': 'webUIProxySmoke',
-			},
-			'browsers': [
-				'chrome'
-			],
-			'emailNeeded': True,
-			'proxyNeeded': True,
-			'useHttps': False,
-			'filterTags': '@smokeTest&&~@notifications-app-required',
-			'runAllSuites': True,
-			'numberOfParts': 3,
-		},
-		'apiProxy': {
-			'suites': {
-				'apiProxySmoketest': 'apiProxySmoke',
-			},
-			'proxyNeeded': True,
-			'useHttps': False,
-			'filterTags': '@smokeTest&&~@notifications-app-required',
-			'runAllSuites': True,
-			'numberOfParts': 8,
-		},
-	}
 }
 
 def main(ctx):
-	initial = initialPipelines(ctx)
-
-	before = beforePipelines(ctx)
-	dependsOn(initial, before)
-
-	coverageTests = coveragePipelines(ctx)
-	if (coverageTests == False):
-		print('Errors detected in coveragePipelines. Review messages above.')
-		return []
-
-	dependsOn(before, coverageTests)
-
-	stages = stagePipelines(ctx)
-	if (stages == False):
-		print('Errors detected in stagePipelines. Review messages above.')
-		return []
-
-	dependsOn(before, stages)
-
-	afterCoverageTests = afterCoveragePipelines(ctx)
-	dependsOn(coverageTests, afterCoverageTests)
-
-	after = afterPipelines(ctx)
-	dependsOn(afterCoverageTests + stages, after)
-
-	return initial + before + coverageTests + afterCoverageTests + stages + after
+	return fileExternalPhpUnitTests(ctx)
 
 def initialPipelines(ctx):
 	return dependencies(ctx)
@@ -2392,6 +2113,58 @@ def owncloudLog(server, folder):
 			'tail -f /drone/%s/data/owncloud.log' % folder
 		]
 	}]
+
+def owncloudServer():
+	return [{
+		'name': 'ocServer',
+		'image': 'owncloud/server',
+		'pull': 'always',
+		'environment': {
+			'OWNCLOUD_VERSION': '10.6',
+			'OWNCLOUD_DOMAIN': 'ocSever',
+			'ADMIN_USERNAME': 'admin',
+			'ADMIN_PASSWORD': 'admin',
+			'HTTP_PORT': '80'
+		}
+	}]
+
+def fileExternalPhpUnitTests(ctx):
+	return {
+		'kind': 'pipeline',
+		'type': 'docker',
+		'name': 'FilesExternalUnitTests',
+		'steps':
+			owncloudServer() +
+			runPhpTest()
+		,
+		'depends_on': [],
+		'trigger': {
+			'ref': [
+				'refs/pull/**',
+				'refs/tags/**'
+			]
+		}
+	}
+
+def runPhpTest():
+	return [{
+		"name": "phpUnitTest7.4",
+		"image": "owncloudci/php:7.4",
+		"pull": "always",
+		'commands': [
+			'wait-for-it -t 1200 ocServer:80',
+			'cd /drone/src',
+			'docker ps'
+		],
+		'depends_on': [],
+		'trigger': {
+			'ref': [
+				'refs/pull/**',
+				'refs/tags/**'
+			]
+		}
+	}]
+
 
 def dependsOn(earlierStages, nextStages):
 	for earlierStage in earlierStages:
