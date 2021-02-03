@@ -147,6 +147,35 @@ class PublicFilesPlugin extends ServerPlugin {
 			$propFind->handle(FilesPlugin::SIZE_PROPERTYNAME, static function () use ($node) {
 				return $node->getNode()->getSize();
 			});
+			$server = $this->server;
+			$propFind->handle(FilesPlugin::DOWNLOADURL_PROPERTYNAME, static function () use ($node, $server) {
+				if ($node->getNode()->getType() === FileInfo::TYPE_FOLDER) {
+					return "";
+				}
+				$path = $server->getBaseUri() . $server->getRequestUri();
+				$nodeName = $node->getNode()->getName();
+				if (\substr($path, -\strlen($nodeName)) !== $nodeName) {
+					$path .= '/' . $nodeName;
+				}
+
+				$share = $node->getShare();
+				if ($share->getPassword() === null) {
+					return $path;
+				}
+
+				$validUntil = new \DateTime();
+				$validUntil->add(new \DateInterval("PT30M")); // valid for 30 minutes
+				$key = \hash_hkdf('sha256', $share->getPassword());
+
+				if ($share->getNode()->getType() === FileInfo::TYPE_FOLDER) {
+					$shareRoot = $share->getNode()->getPath();
+					$shared_resource_path = \substr($node->getNode()->getPath(), \strlen($shareRoot));
+				} else {
+					$shared_resource_path = '/' . $share->getNode()->getName();
+				}
+				$s = new PublicShareSigner($share->getToken(), $shared_resource_path, $validUntil, $key);
+				return $path . '?signature=' . $s->getSignature() . '&expires=' . \urlencode($validUntil->format(\DateTime::ATOM));
+			});
 		}
 	}
 
