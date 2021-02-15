@@ -2125,6 +2125,32 @@ def owncloudServer():
 			'ADMIN_USERNAME': 'admin',
 			'ADMIN_PASSWORD': 'admin',
 			'HTTP_PORT': '80'
+		},
+		'depends_on': ['mariadb-server', 'redis-server']
+	}]
+
+def mariaDBServer():
+	return [{
+		'name': 'mariadb-server',
+		'image': 'webhippie/mariadb:latest',
+		'pull': 'always',
+		'environment': {
+			'MARIADB_ROOT_PASSWORD': 'owncloud',
+			'MARIADB_USERNAME': 'owncloud',
+			'MARIADB_PASSWORD': 'owncloud',
+			'MARIADB_DATABASE': 'owncloud',
+			'MARIADB_MAX_ALLOWED_PACKET': '128M',
+			'MARIADB_INNODB_LOG_FILE_SIZE': '64M'
+		}
+	}]
+
+def redisServer():
+	return [{
+		'name': 'redis-server',
+		'image': 'webhippie/redis:latest',
+		'pull': 'always',
+		'environment': {
+			'REDIS_DATABASES': 1
 		}
 	}]
 
@@ -2137,6 +2163,8 @@ def fileExternalPhpUnitTests(ctx):
 			runPhpTest()
 		,
 		'services':
+			redisServer() +
+			mariaDBServer() +
 			owncloudServer()
 		,
 		'depends_on': [],
