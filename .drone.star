@@ -2121,10 +2121,10 @@ def owncloudServer():
 		'pull': 'always',
 		'environment': {
 			'OWNCLOUD_VERSION': '10.6',
-			'OWNCLOUD_DOMAIN': 'ocSever',
+			'OWNCLOUD_DOMAIN': 'oc-server',
 			'ADMIN_USERNAME': 'admin',
 			'ADMIN_PASSWORD': 'admin',
-			'HTTP_PORT': '80'
+			'HTTP_PORT': '8080'
 		},
 		'depends_on': ['mariadb-server', 'redis-server']
 	}]
@@ -2182,7 +2182,7 @@ def runPhpTest():
 		"image": "owncloudci/php:7.4",
 		"pull": "always",
 		'commands': [
-			'wait-for-it -t 20000 oc-server:80',
+			'wait-for-it -t 1200 oc-server:8080 -- echo "oc server is up"',
 			'cd /drone/src',
 			'docker ps'
 		],
