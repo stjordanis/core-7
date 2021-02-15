@@ -2126,7 +2126,7 @@ def owncloudServer():
 			'ADMIN_PASSWORD': 'admin',
 			'HTTP_PORT': '8080'
 		},
-		'depends_on': ['mariadb-server', 'redis-server']
+		'depends_on': []
 	}]
 
 def mariaDBServer():
@@ -2154,6 +2154,32 @@ def redisServer():
 		}
 	}]
 
+def runPhpTest():
+	return [{
+		'name': 'files-external-unit-tests',
+		'image': 'owncloudci/php:7.4',
+		'pull': 'always',
+		'environment': {
+			'TEST_PHP_SUITE': 'apps/files_external/tests/Storage/OwncloudTest.php'
+		},
+		'commands': [
+			'wait-for-it -t 1200 oc-server:8080 -- echo "OC server is up."',
+			'cd /drone/src',
+			'sed -i "48 s/false/true/" apps/files_external/tests/config.php',
+			'sed -i "s/localhost\\\/owncloud/oc-server:8080/g" apps/files_external/tests/config.php',
+			'make',
+			'curl -u admin:admin http://oc-server:8080/ocs/v1.php/cloud/users -d userid="test" -d password="test"',
+			'make test-php-unit'
+		],
+		'depends_on': [],
+		'trigger': {
+			'ref': [
+				'refs/pull/**',
+				'refs/tags/**'
+			]
+		}
+	}]
+
 def fileExternalPhpUnitTests(ctx):
 	return {
 		'kind': 'pipeline',
@@ -2175,25 +2201,6 @@ def fileExternalPhpUnitTests(ctx):
 			]
 		}
 	}
-
-def runPhpTest():
-	return [{
-		"name": "phpUnitTest7.4",
-		"image": "owncloudci/php:7.4",
-		"pull": "always",
-		'commands': [
-			'wait-for-it -t 1200 oc-server:8080 -- echo "oc server is up"',
-			'cd /drone/src',
-			'docker ps'
-		],
-		'depends_on': [],
-		'trigger': {
-			'ref': [
-				'refs/pull/**',
-				'refs/tags/**'
-			]
-		}
-	}]
 
 
 def dependsOn(earlierStages, nextStages):
